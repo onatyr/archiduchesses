@@ -1,8 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig to read more about this file */
-
     "target": "es2016",
     "module": "commonjs",
     "rootDir": "./",
@@ -10,11 +8,18 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
-  "references": [{
-    "path": "../shared"
-  }],
-  "exclude": ["./verdiApp",
-    "apps/api/database/migrations", "apps/api/database/migrate.ts", "drizzle.config.ts"]
+
+  "references": [
+    {
+      "path": "../shared"
+    }
+  ],
+  "exclude": [
+    "./verdiApp",
+    "apps/api/database/migrations",
+    "apps/api/database/migrate.ts",
+    "drizzle.config.ts"
+  ]
 }

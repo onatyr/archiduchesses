@@ -24,15 +24,14 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
-import PlantDetails from "./PlantDetails.vue";
-import { PlantsService } from "@/services/plants.service";
-import SearchBar from "@/components/SearchBar.vue";
-import { Plant } from "@shared/models/plant.model";
+import { onMounted, ref } from 'vue';
+import { PlantDetails, SearchBar } from '@/components';
+import { PlantsService } from '@/services';
+import { Plant } from '@shared/models';
 
-const plants: Plant[] = ref([]);
-const filteredPlants: Plant[] = ref([]);
-const selectedPlant: Plant = ref(null);
+const plants = ref<Plant[]>([]);
+const filteredPlants = ref<Plant[]>([]);
+const selectedPlant = ref<Plant | null>(null);
 
 onMounted(async () => {
   plants.value = await new PlantsService().getAll();
@@ -40,10 +39,12 @@ onMounted(async () => {
 });
 
 const filterPlants = (query: string) => {
-  if (query.length !== 0)
+  if (query.length !== 0) {
     filteredPlants.value = plants.value.filter((plant) =>
-      plant.name.toLowerCase().includes(query.toLowerCase()),
+      plant.name.toLowerCase().includes(query.toLowerCase())
     );
-  else filteredPlants.value = plants.value;
+  } else {
+    filteredPlants.value = plants.value;
+  }
 };
 </script>

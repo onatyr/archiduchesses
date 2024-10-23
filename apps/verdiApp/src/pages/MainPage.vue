@@ -11,12 +11,12 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted } from 'vue';
 
-import Welcome from "./Welcome.vue";
-import AddPlantForm from "./AddPlantForm.vue";
-import PlusButton from "./PlusButton.vue";
-import PlantList from "./PlantList.vue";
+import Welcome from '../components/Welcome.vue';
+import AddPlantForm from '../components/AddPlantForm.vue';
+import PlusButton from '../components/PlusButton.vue';
+import PlantList from '../components/PlantList.vue';
 
 export default {
   components: {
@@ -29,12 +29,12 @@ export default {
     const showForm = ref<boolean>(false);
 
     onMounted(() => {
-      const header = document.querySelector("header");
+      const header = document.querySelector('header');
       if (header) {
         const headerHeight = header.offsetHeight;
         document.documentElement.style.setProperty(
-          "--header-height",
-          `${headerHeight}px`,
+          '--header-height',
+          `${headerHeight}px`
         );
       }
     });

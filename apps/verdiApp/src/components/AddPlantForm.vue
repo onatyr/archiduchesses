@@ -1,56 +1,56 @@
 <script lang="ts">
-import { ref } from "vue";
-import {PlantsService} from "@/services/plants.service";
+import { ref } from 'vue';
+import { PlantsService } from '@/services';
 
 export default {
   setup(props, { emit }) {
-    const name = ref<string>("");
-    const room = ref<string>("");
-    const family = ref<string>("");
-    const today = new Date().toISOString().split("T")[0];
+    const name = ref<string>('');
+    const room = ref<string>('');
+    const family = ref<string>('');
+    const today = new Date().toISOString().split('T')[0];
     const adoptionDate = ref<string>(today);
     const fileInput = ref<File | null>(null);
 
     const rooms: string[] = [
-      "Living-room",
-      "Bathroom",
-      "Bedroom 1",
-      "Bedroom 2",
-      "Kitchen",
+      'Living-room',
+      'Bathroom',
+      'Bedroom 1',
+      'Bedroom 2',
+      'Kitchen',
     ];
     const families: string[] = [
-      "Flowering Plants",
-      "Foliage Plants",
-      "Succulents & Cacti",
-      "Edible Plants",
-      "Trees & Shrubs",
-      "Climbers & Vines",
-      "Aquatic Plants",
-      "Carnivorous Plants",
-      "Palms",
-      "Bulbous Plants",
+      'Flowering Plants',
+      'Foliage Plants',
+      'Succulents & Cacti',
+      'Edible Plants',
+      'Trees & Shrubs',
+      'Climbers & Vines',
+      'Aquatic Plants',
+      'Carnivorous Plants',
+      'Palms',
+      'Bulbous Plants',
     ];
 
     const onSubmit = async () => {
       const formData = new FormData();
-      formData.append("name", name.value);
-      formData.append("family", family.value);
-      formData.append("room", room.value);
-      formData.append("adoptionDate", adoptionDate.value);
-      formData.append("file", fileInput.value);
+      formData.append('name', name.value);
+      formData.append('family', family.value);
+      formData.append('room', room.value);
+      formData.append('adoptionDate', adoptionDate.value);
+      // formData.append('file', fileInput.value);
 
       const isInserted = await new PlantsService().insertPlant(formData);
 
-      resetForm()
+      resetForm();
 
-      emit("formSubmitted");
+      emit('formSubmitted');
     };
 
     const cancelAction = () => {
-      console.log("Cancel clicked");
+      console.log('Cancel clicked');
       resetForm();
 
-      emit("formSubmitted");
+      emit('formSubmitted');
     };
 
     const updateFile = (file: File) => {
@@ -58,9 +58,9 @@ export default {
     };
 
     const resetForm = () => {
-      name.value = "";
-      family.value = "";
-      room.value = "";
+      name.value = '';
+      family.value = '';
+      room.value = '';
       adoptionDate.value = today;
     };
 
@@ -131,7 +131,7 @@ export default {
       />
     </div>
 
-    <div class="mb-4">
+    <!-- <div class="mb-4">
       <label for="file" class="block text-gray-700 font-bold mb-2"
         >Upload Image:</label
       >
@@ -141,7 +141,7 @@ export default {
         @change="(e) => updateFile(e.target.files[0])"
         class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-apple-500"
       />
-    </div>
+    </div> -->
 
     <div class="w-full flex flex-row justify-center gap-3">
       <button

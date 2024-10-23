@@ -1,4 +1,4 @@
 export type JwtUserModel = {
-    id_user: string;
-    username: string;
+  id_user: string;
+  username: string;
 };

@@ -6,9 +6,5 @@
     "composite": true,
     "declaration": true
   },
-  "include": [
-    "./**/*.ts",
-    "./**/*.d.ts",
-    "./**/*.tsx",
-  ]
+  "include": ["./**/*.ts", "./**/*.d.ts", "./**/*.tsx"]
 }

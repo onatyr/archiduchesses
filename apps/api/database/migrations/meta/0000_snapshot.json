@@ -41,12 +41,8 @@
           "name": "places_user_id_users_id_fk",
           "tableFrom": "places",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -118,12 +114,8 @@
           "name": "plants_user_id_users_id_fk",
           "tableFrom": "plants",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -131,12 +123,8 @@
           "name": "plants_place_id_places_id_fk",
           "tableFrom": "plants",
           "tableTo": "places",
-          "columnsFrom": [
-            "place_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["place_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -207,28 +195,17 @@
     "public.location": {
       "name": "location",
       "schema": "public",
-      "values": [
-        "INTERIOR",
-        "EXTERIOR"
-      ]
+      "values": ["INTERIOR", "EXTERIOR"]
     },
     "public.sunlight": {
       "name": "sunlight",
       "schema": "public",
-      "values": [
-        "LOW",
-        "MEDIUM",
-        "HIGH"
-      ]
+      "values": ["LOW", "MEDIUM", "HIGH"]
     },
     "public.watering": {
       "name": "watering",
       "schema": "public",
-      "values": [
-        "LOW",
-        "MEDIUM",
-        "HIGH"
-      ]
+      "values": ["LOW", "MEDIUM", "HIGH"]
     }
   },
   "schemas": {},

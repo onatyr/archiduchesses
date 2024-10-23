@@ -1,0 +1,28 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: development # Change to production for production builds.
+      # Add other environment variables here.
+    volumes:
+      - ./apps/api:/app # Mount local code for live reloading in development.
+
+  verdiapp: # Renamed to lowercase
+    build:
+      context: ./apps/verdiApp
+      dockerfile: Dockerfile
+    ports:
+      - '8080:80' # Exposing nginx's port 80 on host port 8080.
+    environment:
+      NODE_ENV: development # Change to production for production builds.
+    volumes:
+      - ./apps/verdiApp:/app # Mount local code for live reloading in development.
+

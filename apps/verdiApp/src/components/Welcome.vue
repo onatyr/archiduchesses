@@ -1,11 +1,10 @@
 <script lang="ts">
-import { onMounted, ref } from "vue";
-import { ApiService } from "@/services/api.service";
-import {UserService} from "@/services/user.service";
+import { onMounted, ref } from 'vue';
+import { UserService } from '@/services/user.service';
 
 export default {
   setup() {
-    const userName = ref<string>("");
+    const userName = ref<string>('');
 
     onMounted(async () => {
       userName.value = await new UserService().getName();

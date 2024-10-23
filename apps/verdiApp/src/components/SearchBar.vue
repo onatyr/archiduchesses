@@ -11,13 +11,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, defineProps } from "vue";
+import { ref, watch, defineProps } from 'vue';
 
 const props = defineProps<{
-  query: (searchQuery: string) => T[];
+  query: (searchQuery: string) => void;
 }>();
 
-const searchQuery = ref<string>("");
+const searchQuery = ref<string>('');
 
 const handleSearch = async () => {
   props.query(searchQuery.value);

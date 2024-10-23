@@ -1,19 +1,25 @@
-FROM node:16
+# apps/api/Dockerfile
 
-WORKDIR /usr/src/app
+# Use the official Node.js image.
+FROM node:18
 
-# Copy root package.json and lockfile
-COPY ./package.json ./
-COPY ./package-lock.json ./
+# Set the working directory inside the container.
+WORKDIR /app
 
-# Copy the api package.json
-COPY package.json ./apps/api/package.json
+# Copy package.json and package-lock.json files.
+COPY package.json package-lock.json ./
 
+# Install dependencies.
 RUN npm install
 
-# Copy app source
+# Copy the rest of the application code.
 COPY . .
 
-EXPOSE 8080
+# Build TypeScript files.
+RUN npm run build
 
-CMD [ "node", "apps/api/server.js" ]
+# Expose the application port.
+EXPOSE 3000
+
+# Command to run the application.
+CMD ["node", "dist/index.js"]
