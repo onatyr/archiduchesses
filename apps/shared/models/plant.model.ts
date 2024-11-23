@@ -25,6 +25,11 @@ export enum Watering {
   Minimal = 'Minimal',
 }
 
+export type PlantBookEntity = {
+  name: string,
+  pid: string
+}
+
 export type PlantBookDetails = {
   'pid': string
   'display_pid': string

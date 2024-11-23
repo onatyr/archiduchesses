@@ -2,7 +2,7 @@ import { ApiService } from '../../../shared/services/api.service';
 import dotenv from 'dotenv';
 import path from 'path';
 import { plantBookAxiosInstance } from '../../index';
-import { PlantBookDetails } from "../../../shared/models";
+import { PlantBookDetails, PlantBookEntity } from "../../../shared/models";
 
 dotenv.config({
   path: path.resolve(__dirname, '../../../../.env'),
@@ -17,17 +17,19 @@ export class PlantBookService extends ApiService {
       `Token ${this.apiToken}`;
   }
 
-    async searchPlantByName(search: string): Promise<string[]> {
+    async searchPlantByName(search: string): Promise<PlantBookEntity[]> {
         return this._get(`/plant/search`, {
             alias: search,
             limit: 10,
             offset: 0,
         })
             .then((response) => {
-                const plants: string[] = response.data.results.map(
-                    (plant: { pid: string }) => plant.pid
-                );
-                return plants;
+                return response.data.results.map((plantEntity: { display_pid: string, pid: string}) => {
+                    return {
+                        name: plantEntity.display_pid,
+                        pid: plantEntity.pid
+                    }
+                });
             })
             .catch((e) => {
                 console.error(e);
@@ -37,8 +39,17 @@ export class PlantBookService extends ApiService {
 
     async getPlantDetails(pid: string): Promise<PlantBookDetails | null> {
         return this._get(`/plant/detail/${pid}`)
-            .then((response: { data: PlantBookDetails }) => {
-                return response.data;
+            .then((response) => {
+                return {
+                    'pid': response.data.pid,
+                    'display_pid': response.data.display_pid,
+                    'max_light_lux': response.data.max_light_lux,
+                    'min_light_lux': response.data.min_light_lux,
+                    'max_soil_moist': response.data.max_soil_moist,
+                    'min_soil_moist': response.data.min_soil_moist,
+                    'image_url': response.data.image_url
+                }
+                ;
             })
             .catch((e) => {
                 console.error(e);

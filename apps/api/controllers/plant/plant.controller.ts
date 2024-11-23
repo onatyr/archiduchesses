@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm';
 import { PlantNetService } from "../../lib/plantnet/plantnet.service";
 import multer from "multer";
 import * as fs from "node:fs";
-import {PlantBookService} from "../../lib/plantbook/plantbook.service";
+import { PlantBookService } from "../../lib/plantbook/plantbook.service";
 
 export const plantController: express.Router = express();
 
@@ -16,8 +16,7 @@ plantController.get('/all', async (req, res) => {
     res.status(200).json(allPlants);
   }
   catch (e) {
-    if (e instanceof Error) console.error(e.message)
-    else console.error(e)
+    console.error(e instanceof Error ? e.message : e);
     res.status(500).json({ message: 'Internal Server Error' })
   }
 });
@@ -45,8 +44,7 @@ plantController.post('/add', async (req, res) => {
       .status(201)
       .json({ message: 'Plant added successfully', plant: newPlant });
   } catch (e) {
-    if (e instanceof Error) console.error('Error adding plant:', e.message);
-    else console.error('Error adding plant:', e);
+    console.error('Error adding plant:', e instanceof Error ? e.message : e);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
@@ -65,13 +63,34 @@ plantController.delete('/delete/:id', async (req, res) => {
     res.status(200).json({
       message: `Plant with ID ${id} deleted successfully`,
     });
-  } catch (e) {
-
-    if (e instanceof Error) console.error('Error deleting plant:', e);
-    else console.error('Error deleting plant:', e)
+  }
+  catch (e) {
+    console.error('Error deleting plant:', e instanceof Error ? e.message : e);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
+plantController.get('/searchPlantBookByName/:name', async (req, res, next) => {
+  try {
+    const plantBookEntities = await new PlantBookService().searchPlantByName(req.params.name)
+    res.status(200).json(plantBookEntities)
+  }
+  catch (e) {
+    console.error(e instanceof Error ? e.message : e);
+    res.status(500)
+  }
+})
+
+plantController.get('/getPlantBookDetails/:pid', async (req, res, next) => {
+  try {
+    const plantBookDetails = await new PlantBookService().getPlantDetails(req.params.pid)
+    res.status(200).json(plantBookDetails)
+  }
+  catch (e) {
+    console.error(e instanceof Error ? e.message : e);
+    res.status(500)
+  }
+})
 
 const upload = multer({ dest: 'plantIdentification/' });
 plantController.post('/identify', upload.single('files'), async (req, res, next)  => {
@@ -92,7 +111,7 @@ plantController.post('/identify', upload.single('files'), async (req, res, next)
     const plantBookService = new PlantBookService()
     const plantNetIdentifications = await Promise.all(
         identificationResponse.map(async (result) => {
-          const plantbookPid = (await plantBookService.searchPlantByName(result.plantnetName)).at(0)
+          const plantbookPid = (await plantBookService.searchPlantByName(result.plantnetName)).at(0)?.pid
           return [{
             ...result,
             plantbookDetails: plantbookPid ? await plantBookService.getPlantDetails(plantbookPid) : null
@@ -103,8 +122,7 @@ plantController.post('/identify', upload.single('files'), async (req, res, next)
     res.status(200).json(plantNetIdentifications)
   }
   catch (e) {
-    if (e instanceof Error) console.error(e.message)
-    else console.error(e)
+    console.error(e instanceof Error ? e.message : e);
     res.status(500)
   }
   finally {
