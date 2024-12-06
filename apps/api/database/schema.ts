@@ -1,4 +1,4 @@
-import { pgEnum, pgTable, primaryKey, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { boolean, pgEnum, pgTable, primaryKey, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { relations } from "drizzle-orm";
 
 export const sunlightEnum = pgEnum('sunlight', [
@@ -14,6 +14,7 @@ export const wateringEnum = pgEnum('watering', [
   'Frequent',
 ]);
 export const locationEnum = pgEnum('location', ['INTERIOR', 'EXTERIOR']);
+export const taskTypeEnum = pgEnum('task_type', ['watering']);
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -35,6 +36,16 @@ export const plants = pgTable('plants', {
     roomId: uuid('room_id').references(() => rooms.id),
     imageUrl: varchar('image_url'),
 });
+
+export const tasks = pgTable('tasks', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    plantId: uuid('plant_id')
+        .references(() => plants.id)
+        .notNull(),
+    type: taskTypeEnum('task_type').notNull(),
+    dueDate: timestamp('due_date', { mode: 'string' }),
+    done: boolean('done').default(false).notNull()
+})
 
 export const usersRelations = relations(users, ({ many }) => ({
     usersToPlaces: many(usersToPlaces),

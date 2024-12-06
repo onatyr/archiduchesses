@@ -49,7 +49,7 @@ export default class AuthService extends ApiService {
         }
       );
 
-      // Assuming the response contains the token and user data
+      // Assuming the response contains the token and users data
       this.setToken(response.data.token);
       localStorage.setItem('userId', response.data.userId);
       localStorage.setItem('userName', response.data.userName);

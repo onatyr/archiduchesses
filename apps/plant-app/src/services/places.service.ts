@@ -3,7 +3,7 @@ import {axiosInstance} from "../main";
 
 export class PlacesService extends ApiService {
     constructor() {
-        super(axiosInstance, 'place');
+        super(axiosInstance, 'places');
     }
 
     async getAll() {

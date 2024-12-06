@@ -1,9 +1,9 @@
 import { ApiService } from '../../../shared/services/api.service';
 import { axiosInstance } from '../main';
 
-export class UserService extends ApiService {
+export class UsersService extends ApiService {
   constructor() {
-    super(axiosInstance, 'user');
+    super(axiosInstance, 'users');
   }
 
   async getUserName(userId: string): Promise<string> {

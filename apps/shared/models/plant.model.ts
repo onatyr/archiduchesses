@@ -1,12 +1,15 @@
+import { Task } from "@shared/models/task.model";
+
 export type Plant = {
-  id: string;
-  userId: string;
-  name: string;
-  sunlight: Sunlight;
-  watering: Watering;
-  adoptionDate: string;
-  placeId: string | undefined;
-  imageUrl: string;
+  id: string
+  userId: string
+  name: string
+  sunlight: Sunlight
+  watering: Watering
+  adoptionDate: string
+  placeId: string | undefined
+  imageUrl: string
+  tasks?: Task[] | undefined
 };
 
 /* eslint-disable no-unused-vars */
@@ -26,7 +29,7 @@ export enum Watering {
 }
 
 export type PlantBookSearchResult = {
-  displayPid: string,
+  displayPid: string
   pid: string
 }
 
@@ -39,8 +42,8 @@ export type PlantBookDetails = PlantBookSearchResult & {
 }
 
 export type PlantNetIdentification = {
-  plantnetName: string,
-  plantnetGenus: string,
-  score: number,
-  plantbookDetails?: PlantBookDetails | null | undefined,
+  plantnetName: string
+  plantnetGenus: string
+  score: number
+  plantbookDetails?: PlantBookDetails | null | undefined
 }

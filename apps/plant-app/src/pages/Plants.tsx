@@ -13,7 +13,7 @@ const Plants: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true); // For loading state
   const [error, setError] = useState<string | null>(null); // For error handling
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to track dialog visibility
-  const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null); // Store plant ID for deletion
+  const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null); // Store plants ID for deletion
   const [dialogMessage, setDialogMessage] = useState(''); // Message to show in the dialog
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const Plants: React.FC = () => {
 
   const handleDeleteClick = (plantId: string) => {
     setSelectedPlantId(plantId);
-    setDialogMessage('Are you sure you want to delete this plant?');
+    setDialogMessage('Are you sure you want to delete this plants?');
     setIsDialogOpen(true);
   };
 
@@ -62,7 +62,7 @@ const Plants: React.FC = () => {
     if (selectedPlantId) {
       const isDeleted = await new PlantsService().deletePlant(selectedPlantId);
       if (isDeleted) {
-        // Filter out the deleted plant from the state
+        // Filter out the deleted plants from the state
         setPlants((prevPlants) =>
           prevPlants.filter((plant) => plant.id !== selectedPlantId)
         );

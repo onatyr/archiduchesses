@@ -3,9 +3,9 @@ import { db } from '../../database/database';
 import { places, users } from '../../database/schema';
 import { eq } from 'drizzle-orm';
 
-export const userController: express.Router = express();
+export const usersController: express.Router = express();
 
-userController.get('/rooms', async (req, res) => {
+usersController.get('/rooms', async (req, res) => {
   const userRooms = await db
     .select()
     .from(places)
@@ -14,7 +14,7 @@ userController.get('/rooms', async (req, res) => {
   res.status(200).json(userRooms);
 });
 
-userController.get('/:id/name', async (req, res) => {
+usersController.get('/:id/name', async (req, res) => {
   const { id } = req.params;
 
   const user = await db

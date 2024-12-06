@@ -4,7 +4,7 @@ import { axiosInstance } from '../main';
 
 export class PlantsService extends ApiService {
   constructor() {
-    super(axiosInstance, 'plant');
+    super(axiosInstance, 'plants');
   }
 
   async getAll(): Promise<Plant[]> {

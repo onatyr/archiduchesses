@@ -8,8 +8,6 @@ import './index.css';
 // Define base URL for Axios
 const baseUrl: string | undefined = import.meta.env.VITE_API_BASE_URL;
 
-console.log(baseUrl)
-
 // Create an Axios instance with TypeScript type
 export const axiosInstance: AxiosInstance = axios.create({
   baseURL: baseUrl ?? "http://127.0.0.1:3000/",

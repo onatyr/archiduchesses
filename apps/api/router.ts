@@ -1,12 +1,14 @@
 import express from 'express';
-import { plantController } from './controllers/plant/plant.controller';
+import { plantsController } from './controllers/plants/plants.controller';
 import { authController } from './controllers/auth/auth.controller';
-import { userController } from './controllers/user/user.controller';
-import { placeController } from "./controllers/places/place.controller";
+import { usersController } from './controllers/users/users.controller';
+import { placesController } from "./controllers/places/places.controller";
+import { tasksController } from "./controllers/tasks/tasks.controller";
 
 export const router: express.Router = express.Router();
 
 router.use('/auth', authController);
-router.use('/user', userController);
-router.use('/plant', plantController);
-router.use('/place', placeController)
+router.use('/users', usersController);
+router.use('/plants', plantsController);
+router.use('/places', placesController)
+router.use('/tasks', tasksController)
