@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserService } from '../services/user.service';
-import ReactIcon from './ReactIcon';
+import { UsersService } from "@plantApp/src/services/users.service";
+import ReactIcon from "@plantApp/src/components/ReactIcon";
 
 const Sidebar: React.FC = () => {
   const [userName, setUserName] = useState('stranger');
@@ -16,10 +16,7 @@ const Sidebar: React.FC = () => {
           setIsLoading(false);
           return;
         }
-
-        console.log('Fetching username for userId:', userId); // Debugging line
-        const fetchedUserName = await new UserService().getUserName(userId);
-        console.log('Fetched userName:', fetchedUserName); // Debugging line
+        const fetchedUserName = await new UsersService().getUserName(userId);
 
         if (fetchedUserName) {
           setUserName(fetchedUserName);

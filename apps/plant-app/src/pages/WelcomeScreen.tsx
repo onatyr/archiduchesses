@@ -1,5 +1,5 @@
-import AuthForm from '../components/AuthForm';
-import ReactIcon from '../components/ReactIcon';
+import AuthForm from '@plantApp/src/components/AuthForm';
+import ReactIcon from '@plantApp/src/components/ReactIcon';
 
 const WelcomeScreen = () => {
   return (

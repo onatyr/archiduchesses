@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { PlantsService } from '../services/plants.service';
-import { Plant, Sunlight, Watering } from '../../../shared/models';
-import AddPlantButton from '../components/AddPlantButton';
-import AddPlantForm from '../components/forms/AddPlantForm';
-import { formatDate } from '../utils/date';
-import ConfirmationDialog from '../components/ConfirmationDialog'; // Import the dialog
-import ReactIcon from '../components/ReactIcon';
+import AddPlantButton from '@plantApp/src/components/AddPlantButton';
+import { formatDate } from '@plantApp/src/utils/date';
+import ReactIcon from '@plantApp/src/components/ReactIcon';
+import { PlantsService } from "@plantApp/src/services/plants.service";
+import { Plant, Sunlight } from "@shared/models";
+import ConfirmationDialog from "@plantApp/src/components/ConfirmationDialog";
+import { getOrdinal } from "@shared/utils/enum.util";
+import AddPlantForm from "@plantApp/src/components/forms/AddPlantForm";
 
 const Plants: React.FC = () => {
   const [plants, setPlants] = useState<Plant[]>([]);
+  const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null);
+
   const [isAddPlantFormOpen, setIsAddPlantFormOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // For loading state
-  const [error, setError] = useState<string | null>(null); // For error handling
-  const [isDialogOpen, setIsDialogOpen] = useState(false); // State to track dialog visibility
-  const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null); // Store plant ID for deletion
-  const [dialogMessage, setDialogMessage] = useState(''); // Message to show in the dialog
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState('');
 
   useEffect(() => {
     const fetchPlants = async () => {
@@ -33,28 +35,9 @@ const Plants: React.FC = () => {
   const handleAddPlantClick = () => setIsAddPlantFormOpen(true);
   const handleFormClose = () => setIsAddPlantFormOpen(false);
 
-  const getRating = (
-    value: Sunlight | Watering,
-    ratings: Record<string, number>
-  ): number => ratings[value] || 0;
-
-  const sunlightRatings: Record<string, number> = {
-    [Sunlight.FullSun]: 4,
-    [Sunlight.BrightIndirectLight]: 3,
-    [Sunlight.PartialShade]: 2,
-    [Sunlight.LowLight]: 1,
-  };
-
-  const wateringRatings: Record<string, number> = {
-    [Watering.Frequent]: 4,
-    [Watering.Moderate]: 3,
-    [Watering.Sparing]: 2,
-    [Watering.Minimal]: 1,
-  };
-
   const handleDeleteClick = (plantId: string) => {
     setSelectedPlantId(plantId);
-    setDialogMessage('Are you sure you want to delete this plant?');
+    setDialogMessage('Are you sure you want to delete this plants?');
     setIsDialogOpen(true);
   };
 
@@ -62,7 +45,7 @@ const Plants: React.FC = () => {
     if (selectedPlantId) {
       const isDeleted = await new PlantsService().deletePlant(selectedPlantId);
       if (isDeleted) {
-        // Filter out the deleted plant from the state
+        // Filter out the deleted plants from the state
         setPlants((prevPlants) =>
           prevPlants.filter((plant) => plant.id !== selectedPlantId)
         );
@@ -94,7 +77,6 @@ const Plants: React.FC = () => {
         <div className="text-center text-error">{error}</div>
       ) : (
         <div className="w-full">
-          {/* Display Add Plant Form if it's open */}
           {isAddPlantFormOpen ? (
             <AddPlantForm onClose={handleFormClose} />
           ) : plants.length === 0 ? (
@@ -124,7 +106,7 @@ const Plants: React.FC = () => {
                       <div className="flex items-center gap-2 mt-2">
                         <span className="flex bg-surface dark:bg-dark-surface px-2 rounded-full text-yellow-400 p-1">
                           {Array.from({
-                            length: getRating(plant.sunlight, sunlightRatings),
+                            length: getOrdinal(Sunlight, plant.sunlight) + 1,
                           }).map((_, index) => (
                             <ReactIcon
                               key={index}
@@ -135,7 +117,7 @@ const Plants: React.FC = () => {
                         </span>
                         <span className="flex bg-surface dark:bg-dark-surface px-2 rounded-full text-blue-400 p-1">
                           {Array.from({
-                            length: getRating(plant.watering, wateringRatings),
+                            length: 8, // todo rating watering recurrence
                           }).map((_, index) => (
                             <ReactIcon
                               key={index}

@@ -1,6 +1,6 @@
 // context/UserContext.tsx
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { User } from '../../../shared/models';
+import { User } from '@shared/models';
 
 type UserContextType = {
   user: User | null;

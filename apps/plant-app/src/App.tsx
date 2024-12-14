@@ -1,13 +1,13 @@
 // App.tsx
 import * as React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import Sidebar from './components/SideBar';
-import Tasks from './pages/Tasks';
-import Plants from './pages/Plants';
-import Rooms from './pages/Rooms';
-import WelcomeScreen from './pages/WelcomeScreen';
-import Settings from './pages/Settings';
-import { UserProvider } from './context/UserContext'; // Import the UserProvider
+import Plants from '@plantApp/src/pages/Plants';
+import Tasks from '@plantApp/src/pages/Tasks';
+import Rooms from '@plantApp/src/pages/Rooms';
+import WelcomeScreen from '@plantApp/src/pages/WelcomeScreen';
+import Settings from '@plantApp/src/pages/Settings';
+import { UserProvider } from '@plantApp/src/context/UserContext';
+import Sidebar from "@plantApp/src/components/SideBar"; // Import the UserProvider
 
 const App: React.FC = () => {
   const location = useLocation(); // Get current route

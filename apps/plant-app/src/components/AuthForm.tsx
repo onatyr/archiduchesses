@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AuthService from '../services/auth.service'; // Import the AuthService class
-import TextInput from './forms/forms-components/TextInput';
-import ErrorMessage from './forms/forms-components/ErrorMessage';
-import FormButton from './forms/forms-components/FormButton';
-import { useUser } from '../context/UserContext'; // Import the useUser context
+import { useNavigate } from "react-router-dom";
+import { useUser } from "@plantApp/src/context/UserContext";
+import AuthService from "@plantApp/src/services/auth.service";
+import TextInput from "@plantApp/src/components/forms/forms-components/TextInput";
+import ErrorMessage from "@plantApp/src/components/forms/forms-components/ErrorMessage";
+import FormButton from "@plantApp/src/components/forms/forms-components/FormButton";
 
 interface FormState {
   email: string;

@@ -25,6 +25,7 @@ export function authenticate(
       process.env.ACCESS_TOKEN_SECRET,
       (err, userPayload: JwtPayload | string | undefined) => {
         const user = userPayload as JwtUserModel;
+        console.log(user)
         req.userId = user.id_user;
         req.username = user.username;
         next();
@@ -45,4 +46,5 @@ const EXEMPTED_ENDPOINTS = [
     'auth/login',
     'auth/register',
     // endpoints below this message should only be there for testing purpose
+    'plants/identify'
 ];

@@ -59,7 +59,7 @@
         formData.append("files", file);
 
         try {
-            const response = await fetch("http://127.0.0.1:3000/plant/identify", {
+            const response = await fetch("http://127.0.0.1:3000/plants/identify", {
                 method: "POST",
                 body: formData,
             });

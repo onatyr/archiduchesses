@@ -4,7 +4,7 @@ interface TextInputProps {
   id: string;
   label: string;
   type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url'; // Extendable to other types as needed
-  value: string;
+  value: string | number | undefined;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   required?: boolean;
   placeholder?: string;
@@ -14,7 +14,7 @@ interface TextInputProps {
 const TextInput: React.FC<TextInputProps> = ({
   id,
   label,
-  type = 'text',
+  type,
   value,
   onChange,
   required = false,

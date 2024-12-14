@@ -1,12 +1,12 @@
 import express from "express";
-import {getAllPlacesByUserId} from "./place.query";
+import {getAllPlacesByUserId} from "./places.query";
 import {db} from "../../database/database";
 import {rooms} from '../../database/schema';
 import {eq} from "drizzle-orm";
 
-export const placeController: express.Router = express();
+export const placesController: express.Router = express();
 
-placeController.get('/all', async (req, res, next) => {
+placesController.get('/all', async (req, res, next) => {
     try {
         const places = await getAllPlacesByUserId(req.userId).execute()
         res.status(200).json(places)
@@ -15,7 +15,7 @@ placeController.get('/all', async (req, res, next) => {
     }
 })
 
-placeController.get('/allRoomsByPlaceId/:placeId', async (req, res, next) => {
+placesController.get('/allRoomsByPlaceId/:placeId', async (req, res, next) => {
     try {
         const hasAccess = !!(await getAllPlacesByUserId(req.userId).execute()).find((place) => place.id === req.params.placeId)
 

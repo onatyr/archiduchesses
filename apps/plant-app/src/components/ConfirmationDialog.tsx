@@ -1,5 +1,5 @@
 import React from 'react';
-import FormButton from './forms/forms-components/FormButton';
+import FormButton from "@plantApp/src/components/forms/forms-components/FormButton";
 
 interface ConfirmationDialogProps {
   isOpen: boolean;

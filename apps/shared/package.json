@@ -12,5 +12,8 @@
     "composite": true,
     "declaration": true,
     "outDir": "../dist/shared"
+  },
+  "dependencies": {
+    "typescript": "^5.7.2"
   }
 }

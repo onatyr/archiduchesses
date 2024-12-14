@@ -1,6 +1,6 @@
 // pages/Settings.tsx
 import React, { useState, useEffect } from 'react';
-import { useUser } from '../context/UserContext';
+import { useUser } from '@plantApp/src/context/UserContext';
 
 const Settings: React.FC = () => {
   const { user, setUser } = useUser(); // Access the user and setUser from context
