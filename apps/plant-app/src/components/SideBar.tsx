@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { UsersService } from "@plantApp/src/services/users.service";
-import ReactIcon from "@plantApp/src/components/ReactIcon";
+import { Link, useNavigate } from 'react-router-dom';
+import { UsersService } from '@plantApp/src/services/users.service';
+import ReactIcon from '@plantApp/src/components/ReactIcon';
 
 const Sidebar: React.FC = () => {
   const [userName, setUserName] = useState('stranger');
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserName = async () => {
@@ -25,7 +27,7 @@ const Sidebar: React.FC = () => {
         }
       } catch (err) {
         console.error('Error fetching user name:', err);
-        setUserName('stranger'); // Fallback to 'stranger' in case of error
+        setUserName('stranger');
       } finally {
         setIsLoading(false);
       }
@@ -33,6 +35,11 @@ const Sidebar: React.FC = () => {
 
     fetchUserName();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
 
   const linkClassName =
     'hover:bg-primaryVariant dark:hover:bg-dark-primaryVariant p-2 rounded flex gap-2 items-center';
@@ -73,7 +80,9 @@ const Sidebar: React.FC = () => {
             <ReactIcon type="settings" size="2em" />
           </Link>
         </div>
-        <div className="p-4">Logout</div>
+        <button onClick={handleLogout} className="p-4">
+          Logout
+        </button>
       </div>
     </div>
   );

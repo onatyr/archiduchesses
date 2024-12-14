@@ -76,7 +76,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { AuthService } from '@/services';
+import { AuthService } from '../services/';
 import TextInput from './forms/TextInput.vue';
 import FormButton from './forms/FormButton.vue';
 import ErrorMessage from './forms/ErrorMessage.vue';
@@ -178,7 +178,6 @@ export default defineComponent({
         }
 
         const isLogged = await authService.login(form.email, form.password);
-        console.log(isLogged);
 
         if (isLogged) {
           await router.push({ name: 'main' });
