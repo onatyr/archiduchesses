@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { PlantBookService } from '../../../../shared/services/plantbook.service';
 import { PlantsService } from '../../services/plants.service';
-import { Plant, PlantBookDetails, PlantBookSearchResult, Sunlight, Watering } from '../../../../shared/models';
+import {
+  Plant,
+  PlantBookDetails,
+  PlantBookSearchResult,
+  Sunlight,
+  Watering,
+} from '../../../../shared/models';
 import { v4 as uuidv4 } from 'uuid';
 import TextInput from './forms-components/TextInput';
 import ErrorMessage from './forms-components/ErrorMessage';
@@ -14,13 +20,18 @@ interface AddPlantFormProps {
 
 const AddPlantForm: React.FC<AddPlantFormProps> = ({ onClose }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<PlantBookSearchResult[]>([]);
+  const [searchResults, setSearchResults] = useState<PlantBookSearchResult[]>(
+    []
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [isDetailsLoading, setIsDetailsLoading] = useState(false);
-  const [selectedPlantDetails, setSelectedPlantDetails] = useState<PlantBookDetails | null >(null);
+  const [selectedPlantDetails, setSelectedPlantDetails] =
+    useState<PlantBookDetails | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const plantBookService = new PlantBookService(import.meta.env.VITE_PLANTBOOK_API_KEY);
+  const plantBookService = new PlantBookService(
+    import.meta.env.VITE_PLANTBOOK_API_KEY
+  );
   const plantsService = new PlantsService();
 
   useEffect(() => {
@@ -77,24 +88,31 @@ const AddPlantForm: React.FC<AddPlantFormProps> = ({ onClose }) => {
     }));
   };
 
-  const getSunlightExposure = (lux: number): Sunlight => {
-    if (lux >= 50000) {
+  const getSunlightExposure = (maxLux: number, minLux: number): Sunlight => {
+    const averageLux = (maxLux + minLux) / 2;
+
+    if (averageLux >= 50000) {
       return Sunlight.FullSun;
-    } else if (lux >= 15000) {
+    } else if (averageLux >= 15000) {
       return Sunlight.BrightIndirectLight;
-    } else if (lux >= 3000) {
+    } else if (averageLux >= 3000) {
       return Sunlight.PartialShade;
     } else {
       return Sunlight.LowLight;
     }
   };
 
-  const getWateringSchedule = (soilMoisture: number): Watering => {
-    if (soilMoisture >= 60) {
+  const getWateringSchedule = (
+    maxMoisture: number,
+    minMoisture: number
+  ): Watering => {
+    const averageMoisture = (maxMoisture + minMoisture) / 2;
+
+    if (averageMoisture >= 60) {
       return Watering.Frequent;
-    } else if (soilMoisture >= 40) {
+    } else if (averageMoisture >= 40) {
       return Watering.Moderate;
-    } else if (soilMoisture >= 20) {
+    } else if (averageMoisture >= 20) {
       return Watering.Sparing;
     } else {
       return Watering.Minimal;
@@ -108,8 +126,14 @@ const AddPlantForm: React.FC<AddPlantFormProps> = ({ onClose }) => {
       id: uuidv4(),
       userId: localStorage.getItem('userId')!,
       name: selectedPlantDetails.displayPid,
-      sunlight: getSunlightExposure(selectedPlantDetails.maxLightLux),
-      watering: getWateringSchedule(selectedPlantDetails.maxSoilMoist),
+      sunlight: getSunlightExposure(
+        selectedPlantDetails.maxLightLux,
+        selectedPlantDetails.minLightLux
+      ),
+      watering: getWateringSchedule(
+        selectedPlantDetails.maxSoilMoist,
+        selectedPlantDetails.minSoilMoist
+      ),
       adoptionDate: new Date().toISOString(),
       placeId: '',
       imageUrl: selectedPlantDetails.imageUrl || '',
@@ -201,7 +225,10 @@ const AddPlantForm: React.FC<AddPlantFormProps> = ({ onClose }) => {
                 Sunlight Exposure
               </label>
               <p className="p-2 border border-surface dark:border-dark-surface rounded w-full">
-                {getSunlightExposure(selectedPlantDetails.maxLightLux)}
+                {getSunlightExposure(
+                  selectedPlantDetails.maxLightLux,
+                  selectedPlantDetails.minLightLux
+                )}
               </p>
             </div>
 
@@ -210,7 +237,10 @@ const AddPlantForm: React.FC<AddPlantFormProps> = ({ onClose }) => {
                 Watering Schedule
               </label>
               <p className="p-2 border border-surface dark:border-dark-surface rounded w-full">
-                {getWateringSchedule(selectedPlantDetails.maxSoilMoist)}
+                {getWateringSchedule(
+                  selectedPlantDetails.maxSoilMoist,
+                  selectedPlantDetails.minSoilMoist
+                )}
               </p>
             </div>
 
