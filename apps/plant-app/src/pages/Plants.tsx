@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import AddPlantButton from '@plantApp/src/components/AddPlantButton';
 import { formatDate } from '@plantApp/src/utils/date';
 import ReactIcon from '@plantApp/src/components/ReactIcon';
-import { PlantsService } from "@plantApp/src/services/plants.service";
-import { Plant, Sunlight } from "@shared/models";
-import ConfirmationDialog from "@plantApp/src/components/ConfirmationDialog";
-import { getOrdinal } from "@shared/utils/enum.util";
-import AddPlantForm from "@plantApp/src/components/forms/AddPlantForm";
+import { PlantsService } from '@plantApp/src/services/plants.service';
+import { Plant, Sunlight } from '@shared/models';
+import ConfirmationDialog from '@plantApp/src/components/ConfirmationDialog';
+import { getOrdinal } from '@shared/utils/enum.util';
+import AddPlantForm from '@plantApp/src/components/forms/AddPlantForm';
 
 const Plants: React.FC = () => {
   const [plants, setPlants] = useState<Plant[]>([]);
@@ -45,17 +45,16 @@ const Plants: React.FC = () => {
     if (selectedPlantId) {
       const isDeleted = await new PlantsService().deletePlant(selectedPlantId);
       if (isDeleted) {
-        // Filter out the deleted plants from the state
         setPlants((prevPlants) =>
           prevPlants.filter((plant) => plant.id !== selectedPlantId)
         );
       }
-      setIsDialogOpen(false); // Close the dialog after deletion
+      setIsDialogOpen(false);
     }
   };
 
   const handleCancelDelete = () => {
-    setIsDialogOpen(false); // Close the dialog without deletion
+    setIsDialogOpen(false);
   };
 
   return (
@@ -115,17 +114,14 @@ const Plants: React.FC = () => {
                             />
                           ))}
                         </span>
-                        <span className="flex bg-surface dark:bg-dark-surface px-2 rounded-full text-blue-400 p-1">
-                          {Array.from({
-                            length: 8, // todo rating watering recurrence
-                          }).map((_, index) => (
-                            <ReactIcon
-                              key={index}
-                              type="watering"
-                              size="0.8em"
-                            />
-                          ))}
-                        </span>
+                        {plant.wateringRecurrenceDays && (
+                          <span className="flex items-center gap-1 bg-surface dark:bg-dark-surface px-2 rounded-full text-blue-400 p-1">
+                            <ReactIcon type="watering" size="0.8em" />
+                            <span className="text-xs font-medium">
+                              every {plant.wateringRecurrenceDays} days
+                            </span>
+                          </span>
+                        )}
                       </div>
                     </div>
                     <button
