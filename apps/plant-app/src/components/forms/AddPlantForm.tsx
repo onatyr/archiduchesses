@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { PlantBookService } from '@shared/services/plantbook.service';
-import {
-  PlantBase,
-  PlantBookSearchResult,
-} from '@shared/models';
+import { PlantBase, PlantBookSearchResult } from '@shared/models';
 
-import { getSunlightExposure } from "@shared/utils/plant.util";
-import { PlantsService } from "@plantApp/src/services/plants.service";
-import TextInput from "@plantApp/src/components/forms/forms-components/TextInput";
-import Loading from "@plantApp/src/components/Loading";
-import ErrorMessage from "@plantApp/src/components/forms/forms-components/ErrorMessage";
-import FormButton from "@plantApp/src/components/forms/forms-components/FormButton";
+import { getSunlightExposure } from '@shared/utils/plant.util';
+import { PlantsService } from '@plantApp/src/services/plants.service';
+import TextInput from '@plantApp/src/components/forms/forms-components/TextInput';
+import Loading from '@plantApp/src/components/Loading';
+import ErrorMessage from '@plantApp/src/components/forms/forms-components/ErrorMessage';
+import FormButton from '@plantApp/src/components/forms/forms-components/FormButton';
 
 interface AddPlantFormProps {
   onClose: () => void;
 }
 
 const AddPlantForm: React.FC<AddPlantFormProps> = ({ onClose }) => {
-  const plantBookService = new PlantBookService(import.meta.env.VITE_PLANTBOOK_API_KEY);
+  const plantBookService = new PlantBookService(
+    import.meta.env.VITE_PLANTBOOK_API_KEY
+  );
   const plantsService = new PlantsService();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<PlantBookSearchResult[]>([]);
-  const [newPlant, setNewPlant] = useState<PlantBase | undefined>(undefined)
+  const [searchResults, setSearchResults] = useState<PlantBookSearchResult[]>(
+    []
+  );
+  const [newPlant, setNewPlant] = useState<PlantBase | undefined>(undefined);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDetailsLoading, setIsDetailsLoading] = useState(false);
@@ -70,7 +71,7 @@ const AddPlantForm: React.FC<AddPlantFormProps> = ({ onClose }) => {
           adoptionDate: new Date(),
           roomId: undefined,
           imageUrl: plantDetails?.imageUrl || undefined,
-        })
+        });
         setError(null);
       })
       .catch((error) => {
@@ -84,7 +85,7 @@ const AddPlantForm: React.FC<AddPlantFormProps> = ({ onClose }) => {
 
   const handleInputChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    console.log(e.target)
+    console.log(e.target);
     setNewPlant((prevState: any) => ({
       ...prevState,
       [id]: value,
@@ -185,11 +186,11 @@ const AddPlantForm: React.FC<AddPlantFormProps> = ({ onClose }) => {
             </div>
 
             <TextInput
-             id="wateringRecurrenceDays"
-             label="Watering recurrence in days"
-             type="number"
-             value={newPlant.wateringRecurrenceDays}
-             onChange={handleInputChangeForm}
+              id="wateringRecurrenceDays"
+              label="Watering recurrence in days"
+              type="number"
+              value={newPlant.wateringRecurrenceDays}
+              onChange={handleInputChangeForm}
             />
 
             <div className="mt-4">

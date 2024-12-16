@@ -79,7 +79,7 @@ const AuthForm: React.FC = () => {
     if (!validateForm()) return;
 
     try {
-      const authService = new AuthService(); // Create an instance of AuthService
+      const authService = new AuthService();
 
       if (isRegister) {
         // Registration logic
